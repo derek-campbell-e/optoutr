@@ -1,0 +1,21 @@
+{
+  "name": "optoutr",
+  "version": "1.0.0",
+  "description": "beware data brokers",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodemon --exec \"electron .\" --ignore profiles.json --ignore windows.json"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "electron": "^2.0.2",
+    "express": "^4.16.3",
+    "jquery": "^3.3.1",
+    "moment": "^2.22.2",
+    "nightmare": "^3.0.1",
+    "socket.io": "^2.1.1",
+    "socket.io-client": "^2.1.1",
+    "string-similarity": "^1.2.0"
+  }
+}

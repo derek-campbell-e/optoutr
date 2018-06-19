@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>OptOutr</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel='stylesheet' href='assets/style.css'>
+    <style>
+      body, html {
+        overflow: hidden;
+      }
+      .title {
+        text-align: center;
+      }
+      .title-col {
+        padding:20px;
+      }
+
+      #profileScreen {
+        display: block;
+      }
+      #loginScreen {
+        display: none;
+      }
+      .profiles {
+        background-color: #e6e9f2;
+        color: #191d27;
+        height: 100vh;
+        min-width: 300px;
+      }
+      .profiles .title {
+        text-align: left;
+        font-weight: 900;
+        padding-top:20px;
+      }
+      .np {
+        padding: 0;
+      }
+      .extend-col {
+        display: FLEX;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      .extend {
+        flex: 1;
+        height: 100%;
+        overflow: visible;
+      }
+      .crawl-results, .crawl-results * {
+        font-family: 'Work Sans';
+      }
+      .crawl-result {
+        margin-bottom: 21px;
+      }
+      .matches .wrapper {
+        max-width: 100%;
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        display: flex;
+        padding-bottom: 21px;
+      }
+
+      .match {
+        background-color: #485371;
+        color: #fff;
+        padding: 21px;
+        border-radius: 4px;
+        font-size: 0.75em;
+        margin-right: 21px;
+        max-width: 400px;
+      }
+
+      ::-webkit-scrollbar {     
+        background-color: #fff;
+        width: .1em;
+        height: 4px;
+        padding-left:21px;
+}
+
+::-webkit-scrollbar-thumb:window-inactive,
+::-webkit-scrollbar-thumb {
+        background:  black;
+}
+
+.nowrap {
+  flex-wrap: nowrap;
+}
+    </style>
+  </head>
+  <body class='portfolio-body np'>
+    <div class='container-fluid' id='container'>
+
+      <div id="loginScreen">
+        <div class='row'>
+          <div class='col title-col'>
+            <h1 class='title'>USER GENERATED UNIVERSE<br><small>presents</small></h1>
+            <br>
+            <h2 class='title'>OPTOUTR</h2>
+          </div>
+        </div>
+  
+        <div class='row justify-content-center'>
+          <div class='col-8'>
+            <form>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Email address</label>
+                <input type="email" class="form-control" id="username" aria-describedby="emailHelp" placeholder="Enter email">
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" class="form-control" id="password" placeholder="Password">
+              </div>
+              <button type="submit" id='login' class="btn btn-primary btn-block">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div id="profileScreen">
+        <div class='row nowrap'>
+          <div class='profiles col-2 extend-col'>
+            <div class='row'>
+              <div class='col'>
+                  <h3 class='title'>PROFILES</h3>
+              </div>
+            </div>
+            
+            <div class='row extend'>
+              <div class='profiles col'>
+                <div class='row'><div class='col profile'><h4>Derek Campbell</h4></div></div>
+              </div>
+            </div>
+
+          </div>
+          <div class='col-10 extend-col'>
+
+            <div class='row'>
+              <div class='col title-col'>
+                <h2 class='title'>OPTOUTR</h2>
+              </div>
+            </div>
+
+            <div class='row extend'>
+              <div class='col crawl-results'>
+
+                <div class='crawl-result row'>
+                  <div class='col wrapper'>
+
+                    <div class='row'>
+                      <div class='col-10'>
+                        <h4>Spokeo<br><small>MATCHES FOUND:</small></h4>
+                      </div>
+                      <div class='col-2'>
+                        <div class="progress">
+                          <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class='row matches'>
+                      <div class='col wrapper'>
+                          <div class='match col-5'>
+                            <h5>Derek E Campbell</h5><br>
+                            <p>Age: 26</p>
+                            <p>Relatives: Beth A Campbell, Donald E Campbell, Jeremy T Campbell</p>
+                          </div>
+
+                          <div class='match col-5'>
+                              <h5>Derek E Campbell</h5><br>
+                              <p>Age: 26</p>
+                              <p>Relatives: Beth A Campbell, Donald E Campbell, Jeremy T Campbell</p>
+                            </div>
+
+                            <div class='match col-5'>
+                                <h5>Derek E Campbell</h5><br>
+                                <p>Age: 26</p>
+                                <p>Relatives: Beth A Campbell, Donald E Campbell, Jeremy T Campbell</p>
+                              </div>
+
+                              <div class='match col-5'>
+                                  <h5>Derek E Campbell</h5><br>
+                                  <p>Age: 26</p>
+                                  <p>Relatives: Beth A Campbell, Donald E Campbell, Jeremy T Campbell</p>
+                                </div>
+
+                                <div class='match col-5'>
+                                    <h5>Derek E Campbell</h5><br>
+                                    <p>Age: 26</p>
+                                    <p>Relatives: Beth A Campbell, Donald E Campbell, Jeremy T Campbell</p>
+                                  </div>
+                      </div>
+                      
+                    </div>
+
+                  </div>
+                 
+                  
+                </div>
+
+              </div>
+            </div>
+
+            
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </body>
+  <script>window.$ = window.jQuery = require('jquery');</script>
+  <script>
+    let OptOutr = require('./assets/optoutr')();
+  </script>
+</html>
