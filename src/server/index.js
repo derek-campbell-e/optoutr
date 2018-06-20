@@ -10,15 +10,21 @@ module.exports = function OptoutServer(OptOutr){
     socket.on('ready', function(){
       console.log("ITS READY!!!!");
       socket.emit('goto');
+      /*
       socket.emit('runRoutine', {
-        firstName: 'Beth',
-        lastName: 'Campbell',
+        firstName: ' ',
+        lastName: ' ',
         locations: ['Riverside, CA', 'Lake Elsinore, CA']
       });
+      */
     });
     socket.on('debug', function(){
       console.log.apply(console, arguments);
     });
+  });
+
+  process.on('SIGINT', function(){
+    io.close();
   });
 
 };

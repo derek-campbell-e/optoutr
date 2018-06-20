@@ -15,9 +15,9 @@ module.exports = function NightmareNotifier(Nightmare){
   };
 
   notifier.runRoutine = function(person){
-    notifier.debug("RUNNING ROUTINE ON PERSON", person);
+    //notifier.debug("RUNNING ROUTINE ON PERSON", person);
     try {
-      Nightmare.routine(person);
+      //Nightmare.routine(person);
     } catch (error){
       notifier.debug("error", error.message);
     }

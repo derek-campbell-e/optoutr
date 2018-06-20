@@ -16,7 +16,7 @@
       }
 
       #profileScreen {
-        display: block;
+        display: flex;
       }
       #loginScreen {
         display: none;
@@ -94,6 +94,13 @@
   height: 10px;
   line-height: 10px;
 }
+#searchRoutine {
+  display: none;
+}
+.help-block {
+  font-size: 85%;
+  color: rgba(255,255,255, 0.5);
+}
     </style>
   </head>
   <body class='portfolio-body np'>
@@ -126,8 +133,8 @@
         </div>
       </div>
 
-      <div id="profileScreen">
-        <div class='row nowrap'>
+      
+        <div id="profileScreen" class='row nowrap'>
           <div class='profiles col-2 extend-col'>
             <div class='row'>
               <div class='col'>
@@ -142,79 +149,137 @@
             </div>
 
           </div>
-          <div class='col extend-col'>
 
-            <div class='row'>
-              <div class='col title-col'>
-                <h2 class='title'>OPTOUTR</h2>
+         
+            <div id='searchRoutine' class='col extend-col'>
+
+              <div class='row'>
+                <div class='col title-col'>
+                  <h2 class='title'>OPTOUTR</h2>
+                </div>
               </div>
-            </div>
-
-            <div class='row extend'>
-              <div class='col crawl-results'>
-
-                <div class='crawl-result row'>
-                  <div class='col wrapper'>
-
-                    <div class='row'>
-                      <div class='col-10'>
-                        <h4>Spokeo<br><small>MATCHES FOUND:</small></h4>
-                      </div>
-                      <div class='col'>
-                        <div class="progress">
-                          <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+  
+              <div class='row extend'>
+                <div class='col crawl-results'>
+  
+                  <div class='crawl-result row'>
+                    <div class='col wrapper'>
+  
+                      <div class='row'>
+                        <div class='col-10'>
+                          <h4>Spokeo<br><small>MATCHES FOUND:</small></h4>
+                        </div>
+                        <div class='col'>
+                          <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+                          </div>
                         </div>
                       </div>
-                    </div>
-
-                    <div class='row matches'>
-                      <div class='col wrapper'>
-                          <div class='match col-5'>
-                            <h5>Derek E Campbell</h5><br>
-                            <p>Age: 26</p>
-                            <p>Relatives: Beth A Campbell, Donald E Campbell, Jeremy T Campbell</p>
-                          </div>
-
-                          <div class='match col-5'>
+  
+                      <div class='row matches'>
+                        <div class='col wrapper'>
+                            <div class='match col-5'>
                               <h5>Derek E Campbell</h5><br>
                               <p>Age: 26</p>
                               <p>Relatives: Beth A Campbell, Donald E Campbell, Jeremy T Campbell</p>
                             </div>
-
+  
                             <div class='match col-5'>
                                 <h5>Derek E Campbell</h5><br>
                                 <p>Age: 26</p>
                                 <p>Relatives: Beth A Campbell, Donald E Campbell, Jeremy T Campbell</p>
                               </div>
-
+  
                               <div class='match col-5'>
                                   <h5>Derek E Campbell</h5><br>
                                   <p>Age: 26</p>
                                   <p>Relatives: Beth A Campbell, Donald E Campbell, Jeremy T Campbell</p>
                                 </div>
-
+  
                                 <div class='match col-5'>
                                     <h5>Derek E Campbell</h5><br>
                                     <p>Age: 26</p>
                                     <p>Relatives: Beth A Campbell, Donald E Campbell, Jeremy T Campbell</p>
                                   </div>
+  
+                                  <div class='match col-5'>
+                                      <h5>Derek E Campbell</h5><br>
+                                      <p>Age: 26</p>
+                                      <p>Relatives: Beth A Campbell, Donald E Campbell, Jeremy T Campbell</p>
+                                    </div>
+                        </div>
+                        
                       </div>
-                      
+  
                     </div>
-
+                   
+                    
                   </div>
-                 
-                  
+  
                 </div>
-
               </div>
+  
+              
             </div>
+          
+         
+          
+            <div id='profileEdit' class='col extend-col'>
 
-            
-          </div>
+              <div class='row'>
+                <div class='col title-col'>
+                  <h2>OPTOUTR<br><small>Edit Profile</small></h2>
+                </div>
+              </div>
+  
+              <div class='row extend'>
+                <div class='col-12 col-lg-8 col-xl-4'>
+                  <form>
+                    <div class="form-group">
+                      <label class="control-label" for="firstName">First Name</label> 
+                      <input id="firstName" name="firstName" placeholder="First Name" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                      <label for="lastName" class="control-label">Last Name</label> 
+                      <input id="lastName" name="lastName" placeholder="Last Name" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                      <label for="dob" class="control-label">Date of Birth</label> 
+                      <input id="dob" name="dob" placeholder="MM/DD/YYYY" type="text" class="form-control" aria-describedby="dobHelpBlock"> 
+                      <span id="dobHelpBlock" class="help-block">We'll use this to calculate age which some sites display and filter by.</span>
+                    </div>
+                    <div class="form-group">
+                      <label for="emailAddress" class="control-label">Disposable Email Address</label> 
+                      <input id="emailAddress" name="emailAddress" placeholder="Email@disposable.com" type="text" class="form-control" aria-describedby="emailAddressHelpBlock"> 
+                      <span id="emailAddressHelpBlock" class="help-block">Enter a DISPOSABLE email address. One you can delete if you get spammed. GMail is great for many reasons...</span>
+                    </div>
+                    <div class="form-group">
+                      <label for="locations" class="control-label">Possible Locations</label> 
+                      <textarea id="locations" name="locations" cols="40" rows="5" class="form-control" aria-describedby="locationsHelpBlock"></textarea> 
+                      <span id="locationsHelpBlock" class="help-block">City, STATE (separated by a new line)</span>
+                    </div>
+                    <div class="form-group">
+                      <label for="relatives" class="control-label">Relatives</label> 
+                      <textarea id="relatives" name="relatives" cols="40" rows="5" class="form-control" aria-describedby="relativesHelpBlock"></textarea> 
+                      <span id="relativesHelpBlock" class="help-block">First Name Last Name (separated by a new line)</span>
+                    </div>
+                    <div class="form-group">
+                      <label for="govID" class="control-label">Government Issued ID</label> 
+                      <input id="govID" name="govID" placeholder="Select File" type="text" class="form-control" aria-describedby="govIDHelpBlock"> 
+                      <span id="govIDHelpBlock" class="help-block">Some data broker sites require a government ID to be uploaded for verification. Upload this now and we'll handle it later!</span>
+                    </div> 
+                    <div class="form-group">
+                      <button name="submit" type="submit" id='addOrEditProfile' class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+              </div>
+  
+              
+            </div>
+          
         </div>
 
-      </div>
+      
 
     </div>
   </body>
