@@ -2,6 +2,7 @@ module.exports = function OptOutr(){
   const fork = require('child_process').spawn;
 
   let oo = {};
+  oo.profiles = require('./profiles')(oo);
   let Server = require('../server')(oo);
 
   oo.nightmarePath = require('path').join(__dirname, '..', 'nightmare/index.js');
@@ -13,7 +14,9 @@ module.exports = function OptOutr(){
   });
 
   oo.nightmare.stderr.pipe(process.stdout);
-  oo.nightmare.stdout.pipe(process.stdout);
+  oo.nightmare.stdout.on('data', function(){
+    
+  });
 
 
   return oo;

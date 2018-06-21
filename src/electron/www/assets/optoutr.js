@@ -1,15 +1,65 @@
 module.exports = function OptOutrWeb(){
   const ipc = require('electron').ipcRenderer;
-
+  const Profiles = require('../../../optoutr/profiles')();
   let oo = {};
+  let profiles = {};
+
+  try {
+    profiles = Profiles.export();
+    console.log(profiles);
+  } catch (error){
+    console.log(error);
+  }
+
+  oo.activePanel = "profileSplash";
+  oo.activeScreen = "profileScreen";
+  oo.activeProfileUUID = null;
+
+  oo.screens = {
+    "loginScreen": [],
+    "profileScreen": ['searchRoutine', 'profileEdit', 'profileSplash']
+  };
+
+
   let CrawlItem = require('./crawl-item');
 
   let validDOB = function(value, format){
     format = format || "MM/DD/YYYY";
     let moment = require('moment');
     let dob = moment(value, format);
-    console.log(dob);
     return dob.isValid();
+  };
+
+
+
+  oo.transition = function(screen, panel, force, outCallback, inCallback){
+    screen = screen || oo.activeScreen;
+    force = force || false;
+    outCallback = outCallback || function(){};
+    inCallback = inCallback || function(){};
+
+    if(screen !== oo.activeScreen){
+      $(`#`+oo.activeScreen).fadeOut(function(){
+        outCallback();
+        oo.activeScreen = screen;
+        $("#"+panel).show();
+        $("#"+screen).fadeIn(function(){
+          inCallback();
+        });
+      });
+      return;
+    }
+
+    if(panel !== oo.activePanel || force){
+      $(`#`+oo.activePanel).fadeOut(function(){
+        outCallback();
+        oo.activePanel = panel;
+        $("#"+panel).fadeIn(function(){
+          inCallback();
+        });
+      });
+    }
+
   };
 
   oo.processLogin = function(){
@@ -35,11 +85,19 @@ module.exports = function OptOutrWeb(){
       emailAddress: "",
       locations: "",
       relatives: "",
-      govID: ""
+      govID: "",
+      UUID: oo.activeProfileUUID
     };
+
     for(let key in form){
       let dom = $(`#${key}`);
-      let value = dom.val().trim();
+      let value = "";
+      try {
+        value = dom.val().trim();
+      } catch (error) {
+
+      }
+      
       switch(key){
         case 'locations':
         case 'relatives':
@@ -50,31 +108,106 @@ module.exports = function OptOutrWeb(){
             dom.closest('.form-group').addClass('error');
             canSubmit = false;
             form[key] = '';
-            alert("NOT VALID");
           }
-          
-    
+        break;
+        case 'UUID':
+          continue;
         break;
         default:
         break;
       }
       form[key] = value;
     }
-    console.log(form);
+    if(canSubmit){
+      ipc.send('addOrEditProfile', form);
+      setTimeout(oo.refreshProfiles, 1000);
+      $("#readyToGo").css('display', 'flex');
+    } else {
+      console.log("NOT GONNA SUBMIT");
+    }
     return false;
+  };
+
+  oo.onAddOrEditProfile = function(){
+
+  };
+
+  oo.refreshProfiles = function(){
+    profiles = Profiles.refresh();
+    console.log(profiles);
+    oo.loadProfiles();
+  };
+
+  oo.loadProfiles = function(){
+    $(".profiles-wrapper").html(null);
+    let html = ``;
+    for(let UUID in profiles){
+      let profile = profiles[UUID];
+      let profileName = profile.fullName;
+      html += `<div class='row'><div class='col profile' data-id='${UUID}'><h4>${profileName}</h4></div></div>`;
+    }
+    let dom = $(html);
+    $(".profiles-wrapper").append(dom);
+  };
+
+  oo.loadProfile = function(){
+    let dom = $(this);
+    let profileName = dom.attr('data-id');
+    let profile = profiles[profileName];
+    
+    oo.transition(null, "profileEdit", true, function(){
+      oo.updateFormWithProfile(profile);
+      oo.activeProfileUUID = profile.UUID;
+    });
+    
+  };
+
+  oo.clearProfileFields = function(){
+    oo.activeProfileUUID = null;
+    $("#profileEdit :input").val(null);
+  };
+
+  oo.addNewProfile = function(){
+    oo.transition(null, "profileEdit", true, function(){
+      oo.clearProfileFields();
+    });
+  };
+
+  oo.updateFormWithProfile = function(profile){
+    for(let key in profile){
+      let dom = $(`#${key}`);
+      switch(key){
+        case 'locations':
+        case 'relatives':
+          let value = profile[key].join("\n");
+          dom.val(value);
+        break;
+        default:
+          dom.val(profile[key]);
+        break;
+      }
+    }
+  };
+
+  oo.startSearch = function(){
+    let activeProfileUUID = oo.activeProfileUUID;
+    let profile = profiles[activeProfileUUID];
+    ipc.send('runRoutine', profile);
   };
 
   let bind = function(){
     $(document).on('click', '#login', oo.processLogin);
     $(document).on('click', '#addOrEditProfile', oo.addOrEditProfile);
+    $(document).on('click', '.profile[data-id]', oo.loadProfile);
+    $(document).on('click', '#addProfile', oo.addNewProfile);
+    $(document).on('click', '#startSearch', oo.startSearch);
+    ipc.on('onAddOrEditProfile', oo.onAddOrEditProfile);
     ipc.on('onSuccessfulLogin', oo.onSuccessfulLogin);
   };
 
   let init = function(){
     bind();
-    let crawlItem = CrawlItem(oo, 'BeenVerified');
-    crawlItem.progress(0.89);
-    oo.crawlItem = crawlItem;
+    oo.loadProfiles();
     return oo;
   };
 

@@ -50,6 +50,15 @@ module.exports = function ElectronModule(OptOutr){
       console.log("GOT AN EVENT");
       event.sender.send('onSuccessfulLogin');
     });
+    ipc.on('addOrEditProfile', function(event, form){
+      OptOutr.profiles.createProfile(form, function(error){
+        console.log("DONE");
+      });
+    });
+    ipc.on('runRoutine', function(event, profile){
+      console.log("READY TO GO WITH PROFILE", profile);
+      OptOutr.activeSocket.emit('runRoutine', profile);
+    });
   }
 
   app.on('ready', createWindow);

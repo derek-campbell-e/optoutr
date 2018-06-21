@@ -17,7 +17,7 @@ module.exports = function NightmareNotifier(Nightmare){
   notifier.runRoutine = function(person){
     //notifier.debug("RUNNING ROUTINE ON PERSON", person);
     try {
-      //Nightmare.routine(person);
+      Nightmare.routine(person);
     } catch (error){
       notifier.debug("error", error.message);
     }
@@ -42,6 +42,13 @@ module.exports = function NightmareNotifier(Nightmare){
   let init = function(){
     socket.on('connect', function(){
       bind();
+      process.stderr.on('data', function(data){
+        notifier.debug('DEBUGGG: ' + data.toString('utf8'));
+      });
+      process.stdout.on('data', function(data){
+        notifier.debug('DEBUGGG');
+      });
+      //console.log("OMGss");
       socket.emit('ready');
     });
     return notifier;

@@ -18,6 +18,7 @@
       #profileScreen {
         display: flex;
       }
+
       #loginScreen {
         display: none;
       }
@@ -44,6 +45,9 @@
         flex: 1;
         height: 100%;
         overflow: visible;
+      }
+      .flex-center {
+        align-items: center;
       }
       .crawl-results, .crawl-results * {
         font-family: 'Work Sans';
@@ -94,16 +98,21 @@
   height: 10px;
   line-height: 10px;
 }
-#searchRoutine {
+#searchRoutine, #profileEdit {
   display: none;
 }
 .help-block {
   font-size: 85%;
   color: rgba(255,255,255, 0.5);
 }
+.profile {
+  cursor: pointer;
+}
     </style>
   </head>
   <body class='portfolio-body np'>
+      <div id="portfolio-drawing"></div>
+
     <div class='container-fluid' id='container'>
 
       <div id="loginScreen">
@@ -139,12 +148,14 @@
             <div class='row'>
               <div class='col'>
                   <h3 class='title'>PROFILES</h3>
+                  <a href="#" id='addProfile'>Add Profile +</a>
+                  <hr>
               </div>
             </div>
             
             <div class='row extend'>
-              <div class='profiles col'>
-                <div class='row'><div class='col profile'><h4>Derek Campbell</h4></div></div>
+              <div class='profiles profiles-wrapper col'>
+                
               </div>
             </div>
 
@@ -227,50 +238,86 @@
             <div id='profileEdit' class='col extend-col'>
 
               <div class='row'>
+                <div class='col-12 col-lg-8 col-xl-4'>
+                  <div class='row'>
+                      <div class='col title-col'>
+                        <h2>OPTOUTR<br><small>Edit Profile</small></h2>
+                      </div>
+                  </div>
+                  <div class='row'>
+                      <div class='col'>
+                          <form>
+                            <div class="form-group">
+                              <label class="control-label" for="firstName">First Name</label> 
+                              <input id="firstName" name="firstName" placeholder="First Name" type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                              <label for="lastName" class="control-label">Last Name</label> 
+                              <input id="lastName" name="lastName" placeholder="Last Name" type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                              <label for="dob" class="control-label">Date of Birth</label> 
+                              <input id="dob" name="dob" placeholder="MM/DD/YYYY" type="text" class="form-control" aria-describedby="dobHelpBlock"> 
+                              <span id="dobHelpBlock" class="help-block">We'll use this to calculate age which some sites display and filter by.</span>
+                            </div>
+                            <div class="form-group">
+                              <label for="emailAddress" class="control-label">Disposable Email Address</label> 
+                              <input id="emailAddress" name="emailAddress" placeholder="Email@disposable.com" type="text" class="form-control" aria-describedby="emailAddressHelpBlock"> 
+                              <span id="emailAddressHelpBlock" class="help-block">Enter a DISPOSABLE email address. One you can delete if you get spammed. GMail is great for many reasons...</span>
+                            </div>
+                            <div class="form-group">
+                              <label for="locations" class="control-label">Possible Locations</label> 
+                              <textarea id="locations" name="locations" cols="40" rows="5" class="form-control" aria-describedby="locationsHelpBlock"></textarea> 
+                              <span id="locationsHelpBlock" class="help-block">City, STATE (separated by a new line)</span>
+                            </div>
+                            <div class="form-group">
+                              <label for="relatives" class="control-label">Relatives</label> 
+                              <textarea id="relatives" name="relatives" cols="40" rows="5" class="form-control" aria-describedby="relativesHelpBlock"></textarea> 
+                              <span id="relativesHelpBlock" class="help-block">First Name Last Name (separated by a new line)</span>
+                            </div>
+                            <div class="form-group">
+                              <label for="govID" class="control-label">Government Issued ID</label> 
+                              <input id="govID" name="govID" placeholder="Select File" type="text" class="form-control" aria-describedby="govIDHelpBlock"> 
+                              <span id="govIDHelpBlock" class="help-block">Some data broker sites require a government ID to be uploaded for verification. Upload this now and we'll handle it later!</span>
+                            </div> 
+                            <div class="form-group">
+                              <button name="submit" type="submit" id='addOrEditProfile' class="btn btn-primary">Submit</button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                  </div>
+                  <div id='readyToGo' class='col extend-col'>
+                      <div class='row extend  justify-content-center flex-center'>
+                        <div class='col-4'>
+                          <h2>Ready to go?<br><small>Click the button below to start!</small></h2>
+                            <button id='startSearch' class="btn btn-block btn-primary">START SEARCH</button>
+                        </div>
+                      </div>
+                    </div>
+              </div>
+
+  
+             
+                
+
+             
+  
+              
+            </div>
+
+            <div id='profileSplash' class='col extend-col'>
+
+              <div class='row'>
                 <div class='col title-col'>
-                  <h2>OPTOUTR<br><small>Edit Profile</small></h2>
+                  <h2>OPTOUTR<br></h2>
                 </div>
               </div>
   
               <div class='row extend'>
                 <div class='col-12 col-lg-8 col-xl-4'>
-                  <form>
-                    <div class="form-group">
-                      <label class="control-label" for="firstName">First Name</label> 
-                      <input id="firstName" name="firstName" placeholder="First Name" type="text" class="form-control">
-                    </div>
-                    <div class="form-group">
-                      <label for="lastName" class="control-label">Last Name</label> 
-                      <input id="lastName" name="lastName" placeholder="Last Name" type="text" class="form-control">
-                    </div>
-                    <div class="form-group">
-                      <label for="dob" class="control-label">Date of Birth</label> 
-                      <input id="dob" name="dob" placeholder="MM/DD/YYYY" type="text" class="form-control" aria-describedby="dobHelpBlock"> 
-                      <span id="dobHelpBlock" class="help-block">We'll use this to calculate age which some sites display and filter by.</span>
-                    </div>
-                    <div class="form-group">
-                      <label for="emailAddress" class="control-label">Disposable Email Address</label> 
-                      <input id="emailAddress" name="emailAddress" placeholder="Email@disposable.com" type="text" class="form-control" aria-describedby="emailAddressHelpBlock"> 
-                      <span id="emailAddressHelpBlock" class="help-block">Enter a DISPOSABLE email address. One you can delete if you get spammed. GMail is great for many reasons...</span>
-                    </div>
-                    <div class="form-group">
-                      <label for="locations" class="control-label">Possible Locations</label> 
-                      <textarea id="locations" name="locations" cols="40" rows="5" class="form-control" aria-describedby="locationsHelpBlock"></textarea> 
-                      <span id="locationsHelpBlock" class="help-block">City, STATE (separated by a new line)</span>
-                    </div>
-                    <div class="form-group">
-                      <label for="relatives" class="control-label">Relatives</label> 
-                      <textarea id="relatives" name="relatives" cols="40" rows="5" class="form-control" aria-describedby="relativesHelpBlock"></textarea> 
-                      <span id="relativesHelpBlock" class="help-block">First Name Last Name (separated by a new line)</span>
-                    </div>
-                    <div class="form-group">
-                      <label for="govID" class="control-label">Government Issued ID</label> 
-                      <input id="govID" name="govID" placeholder="Select File" type="text" class="form-control" aria-describedby="govIDHelpBlock"> 
-                      <span id="govIDHelpBlock" class="help-block">Some data broker sites require a government ID to be uploaded for verification. Upload this now and we'll handle it later!</span>
-                    </div> 
-                    <div class="form-group">
-                      <button name="submit" type="submit" id='addOrEditProfile' class="btn btn-primary">Submit</button>
-                    </div>
+                  <h3>Select a profile to get started!</h3>
+                  <p>Or Create one now!</p>
                 </div>
               </div>
   
@@ -284,6 +331,12 @@
     </div>
   </body>
   <script>window.$ = window.jQuery = require('jquery');</script>
+  <script>
+    require('./assets/svg.js');
+    require('./assets/svg.easing.js')
+    var sa = require('./assets/animation.js')();
+    sa.alpha(0.15);
+  </script>
   <script>
     let OptOutr = require('./assets/optoutr')();
   </script>

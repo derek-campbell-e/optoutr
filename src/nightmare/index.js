@@ -1,4 +1,7 @@
 module.exports = function NightmareModule(){
+
+  
+
   let nm = {};
 
   
@@ -48,6 +51,7 @@ module.exports = function NightmareModule(){
   };
 
   nm.routine = function(person){
+    nm.nightmare = require('./nightmare')();
     let driverKeys = Object.keys(nm.drivers);
     let loop = function(){
       let driverKey = driverKeys.shift();

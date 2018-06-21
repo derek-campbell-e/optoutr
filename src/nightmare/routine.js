@@ -17,6 +17,7 @@ module.exports = function NightmareRoutine(NightmareModule, Nightmare, Driver, C
   // start the profile searching process
   // TODO: impliment options for sites that have a better / only have search for opt-out protocol
   routine.discover = function(person){
+    console.log("discovering");
     if(Driver.options.hasGETSearchURL){
       let url = Driver.urls.getSearchURL(person);
       let session = Nightmare
