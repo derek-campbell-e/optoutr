@@ -40,6 +40,11 @@ module.exports = function CheckThemDriver(NightmareModule){
     return _locations;
   `);
 
+  NightmareModule.functionCreator(driver.funcs, 'eachProfileLocation', ['profileDom'], 'name',`
+    let name = profileDom.find('.name').text().trim();
+    return name;
+  `);
+
   NightmareModule.functionCreator(driver.funcs, 'eachProfileID', ['profileDom'], 'id', `
     let link = profileDom.find("a").attr('onclick');
     let index = link.replace(/\\D/g, "");

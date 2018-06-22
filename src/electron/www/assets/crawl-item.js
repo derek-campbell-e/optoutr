@@ -8,12 +8,12 @@ module.exports = function CrawlItem(OptOutr, Driver){
   
   ci.dom = null;
 
-  ci.createMatch = function(){
-    let match = require('./match')(ci);
-    match.name = "Derek Campbell";
-    match.attr.relatives = ['Donald Campbell', 'Kelly Lawrence'];
-    match.attr.address = '8608 Basswood Ave';
-    match.process();
+  ci.createMatch = function(profiles){
+    console.log("OUR PROFILES", profiles);
+    for(profile of profiles){
+      let match = require('./match')(ci, profile);
+      match.process();
+    }
   };
 
   ci.addMatch = function(match){
@@ -29,7 +29,7 @@ module.exports = function CrawlItem(OptOutr, Driver){
 
   let bind = function(){
     $(ci.dom).on('click', '.match', function(){
-      alert("CLICKED");
+      //alert("CLICKED");
     })
   };
 
@@ -38,14 +38,16 @@ module.exports = function CrawlItem(OptOutr, Driver){
     <div class='col wrapper'>
 
       <div class='row'>
-        <div class='col-10'>
+        <div class='col'>
           <h4>${ci.driver}<br><small>MATCHES FOUND:</small></h4>
         </div>
+        <!--
         <div class='col-2'>
           <div class="progress">
             <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
           </div>
         </div>
+        -->
       </div>
 
       <div class='row matches'>

@@ -192,7 +192,15 @@ module.exports = function OptOutrWeb(){
   oo.startSearch = function(){
     let activeProfileUUID = oo.activeProfileUUID;
     let profile = profiles[activeProfileUUID];
+    oo.transition(null, 'searchRoutine', function(){
+
+    });
     ipc.send('runRoutine', profile);
+  };
+
+  oo.foundProfiles = function(event, driver, profiles){
+    let crawlItem = require('./crawl-item')(oo, driver.name);
+    crawlItem.createMatch(profiles);
   };
 
   let bind = function(){
@@ -203,6 +211,7 @@ module.exports = function OptOutrWeb(){
     $(document).on('click', '#startSearch', oo.startSearch);
     ipc.on('onAddOrEditProfile', oo.onAddOrEditProfile);
     ipc.on('onSuccessfulLogin', oo.onSuccessfulLogin);
+    ipc.on('foundProfiles', oo.foundProfiles);
   };
 
   let init = function(){

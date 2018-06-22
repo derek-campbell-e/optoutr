@@ -58,7 +58,7 @@ module.exports = function NightmareRoutine(NightmareModule, Nightmare, Driver, C
 
   routine.searchPagesWithJavascript = function(person, driver, session, callback){
     routine.injectJSDependencies(session, function(){
-      NightmareModule.debug("SEARCHING WITH JS")
+      NightmareModule.debug("SEARCHING sWITH JS")
       session
       .wait(1000)
       .evaluate(function(selectors, funcs, person){
@@ -239,7 +239,7 @@ module.exports = function NightmareRoutine(NightmareModule, Nightmare, Driver, C
 
   routine.saveProfiles = function(person, profiles){
     routine.decideAutoOptOut(Driver, profiles, function(optResults){
-      NightmareModule.finishSite(profiles);
+      NightmareModule.finishSite(Driver, profiles);
       Callback(error, optResults);
     });
   };

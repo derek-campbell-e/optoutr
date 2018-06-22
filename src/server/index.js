@@ -20,6 +20,10 @@ module.exports = function OptoutServer(OptOutr){
     socket.on('debug', function(){
       console.log.apply(console, arguments);
     });
+    socket.on('foundProfiles', function(){
+      OptOutr.foundProfiles.apply(OptOutr, arguments);
+      console.log("FOUND THEM BITCHES");
+    });
   });
 
   process.on('exit', function(){

@@ -12,6 +12,7 @@ module.exports = function ElectronModule(OptOutr){
   em.window = {};
   em.windowName = 'gui';
   em.updateTimer = null;
+  em.activeRendererIPC = null;
 
   let windows = {};
 
@@ -49,13 +50,16 @@ module.exports = function ElectronModule(OptOutr){
     ipc.on('processLogin', function(event, args){
       console.log("GOT AN EVENT");
       event.sender.send('onSuccessfulLogin');
+      em.activeRendererIPC = event.sender;
     });
     ipc.on('addOrEditProfile', function(event, form){
+      em.activeRendererIPC = event.sender;
       OptOutr.profiles.createProfile(form, function(error){
         console.log("DONE");
       });
     });
     ipc.on('runRoutine', function(event, profile){
+      em.activeRendererIPC = event.sender;
       console.log("READY TO GO WITH PROFILE", profile);
       OptOutr.activeSocket.emit('runRoutine', profile);
     });

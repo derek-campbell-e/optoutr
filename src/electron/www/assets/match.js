@@ -1,13 +1,30 @@
-module.exports = function Match(CrawlItem){
-  let match = {};
+module.exports = function Match(CrawlItem, Profile){
 
-  match.name = "";
+  let truncate = function(str, length, ending) {
+    if (length == null) {
+      length = 100;
+    }
+    if (ending == null) {
+      ending = '...';
+    }
+    if (str.length > length) {
+      return str.substring(0, length - ending.length) + ending;
+    } else {
+      return str;
+    }
+  };
+
+  let match = {};
+  match.profile = Profile;
+
+  match.name = Profile.name || "";
   match.attr = {};
 
   match.attr.relatives = [];
-  match.attr.ages = "";
-  match.attr.locations = [];
+  match.attr.age = Profile.age || "";
+  match.attr.locations = (Profile.locations || []).slice(0, 5);
   match.attr.address = "";
+  match.attr.text = truncate(Profile.text, 50, '...');
   match.attr.social = [];
 
   match.dom = null;
@@ -45,8 +62,8 @@ module.exports = function Match(CrawlItem){
 
   let bind = function(){
     $(match.dom).on('click', 'h5', function(){
-      let text = $(this).text();
-      alert(text);
+      //let text = $(this).text();
+      //alert(text);
     });
   };
 
@@ -55,6 +72,9 @@ module.exports = function Match(CrawlItem){
     <div class='match col-5'>
       <h5 class='name'></h5><br>
       <div class='attr'>
+      </div>
+      <div class='verify'>
+        <p>Is this you? <a href=# class='verifyYes'>YES</a> <a href=# class='verifyNo'>NO</a></p>
       </div>
     </div>`;
     match.dom = $(html);

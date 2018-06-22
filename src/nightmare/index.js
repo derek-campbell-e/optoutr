@@ -70,8 +70,8 @@ module.exports = function NightmareModule(){
     loop();
   };
 
-  nm.finishSite = function(profile){
-    Notifier.debug(profile);
+  nm.finishSite = function(driver, profiles){
+    Notifier.finishSite(driver, profiles);
   };
 
 
