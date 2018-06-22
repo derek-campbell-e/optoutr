@@ -23,9 +23,9 @@ module.exports = function NightmareNotifier(Nightmare){
     }
   };
 
-  notifier.finishSite = function(driver, profiles){
+  notifier.finishSite = function(driver, person, profiles){
     console.log("FINISHING UP");
-    socket.emit('foundProfiles', driver, profiles);
+    socket.emit('foundProfiles', driver, person, profiles);
   };
 
   notifier.debug = function(){

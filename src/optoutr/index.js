@@ -6,7 +6,8 @@ module.exports = function OptOutr(){
   oo.nightmarePath = require('path').join(__dirname, '..', 'nightmare/index.js');
   oo.electron = require('../electron')(oo);
 
-  oo.foundProfiles = function(driver, profiles){
+  oo.foundProfiles = function(driver, person, profiles){
+    oo.profiles.foundProfiles(person, profiles, driver);
     oo.electron.activeRendererIPC.send('foundProfiles', driver, profiles);
   };
 

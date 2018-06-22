@@ -10,15 +10,19 @@ module.exports = function CrawlItem(OptOutr, Driver){
 
   ci.createMatch = function(profiles){
     console.log("OUR PROFILES", profiles);
-    for(profile of profiles){
-      let match = require('./match')(ci, profile);
-      match.process();
+    for(let UUID in profiles){
+      let profile = profiles[UUID];
+      let match = require('./match')(ci, profile, OptOutr);
     }
   };
 
   ci.addMatch = function(match){
     ci.matches.push(match);
     ci.dom.find(".matches .wrapper").append(match.dom);
+  };
+
+  ci.addApproved = function(match){
+    
   };
 
   ci.progress = function(progress){

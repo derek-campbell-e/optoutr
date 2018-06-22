@@ -238,8 +238,18 @@ module.exports = function NightmareRoutine(NightmareModule, Nightmare, Driver, C
   };
 
   routine.saveProfiles = function(person, profiles){
-    routine.decideAutoOptOut(Driver, profiles, function(optResults){
-      NightmareModule.finishSite(Driver, profiles);
+    const UUID = function(){
+      const crypto = require('crypto');
+      return crypto.randomBytes(2).toString('hex') + '-' + crypto.randomBytes(4).toString('hex');
+    };
+    let profilesExport = {};
+    for(profile of profiles){
+      let id = UUID();
+      profile.id = id;
+      profilesExport[id] = profile;
+    }
+    routine.decideAutoOptOut(Driver, profilesExport, function(optResults){
+      NightmareModule.finishSite(Driver, person, profilesExport);
       Callback(error, optResults);
     });
   };

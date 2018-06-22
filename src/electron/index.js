@@ -63,6 +63,11 @@ module.exports = function ElectronModule(OptOutr){
       console.log("READY TO GO WITH PROFILE", profile);
       OptOutr.activeSocket.emit('runRoutine', profile);
     });
+
+    ipc.on('removeMatch', function(event, personID, site, matchID){
+      console.log(personID, matchID);
+      OptOutr.profiles.removeMatchFromProfile(personID, site, matchID);
+    });
   }
 
   app.on('ready', createWindow);

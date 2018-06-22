@@ -44,6 +44,7 @@ module.exports = function OptOutrWeb(){
         oo.activeScreen = screen;
         $("#"+panel).show();
         $("#"+screen).fadeIn(function(){
+          $("#"+screen).css('display', null);
           inCallback();
         });
       });
@@ -55,6 +56,7 @@ module.exports = function OptOutrWeb(){
         outCallback();
         oo.activePanel = panel;
         $("#"+panel).fadeIn(function(){
+          $("#"+panel).css('display', null);
           inCallback();
         });
       });
@@ -157,9 +159,29 @@ module.exports = function OptOutrWeb(){
     
     oo.transition(null, "profileEdit", true, function(){
       oo.updateFormWithProfile(profile);
+      oo.showPastResultsDialogue(profile);
       oo.activeProfileUUID = profile.UUID;
     });
     
+  };
+
+  oo.showPastResultsDialogue = function(profile){
+    if(profile.sites && Object.keys(profile.sites).length > 0){
+      $("#pastResults").fadeIn(function(){
+        $("#pastResults").css('display', 'flex');
+      });
+    }
+  };
+
+  oo.viewPastResults = function(){
+    let profile = profiles[oo.activeProfileUUID];
+    console.log(profile);
+    oo.transition(null, 'searchRoutine', true, function(){
+      console.log("RINNNING");
+      for(let site in profile.sites){
+        oo.foundProfiles(null, {name: site}, profile.sites[site]);
+      }
+    });
   };
 
   oo.clearProfileFields = function(){
@@ -192,7 +214,7 @@ module.exports = function OptOutrWeb(){
   oo.startSearch = function(){
     let activeProfileUUID = oo.activeProfileUUID;
     let profile = profiles[activeProfileUUID];
-    oo.transition(null, 'searchRoutine', function(){
+    oo.transition(null, 'searchRoutine', true, function(){
 
     });
     ipc.send('runRoutine', profile);
@@ -209,6 +231,7 @@ module.exports = function OptOutrWeb(){
     $(document).on('click', '.profile[data-id]', oo.loadProfile);
     $(document).on('click', '#addProfile', oo.addNewProfile);
     $(document).on('click', '#startSearch', oo.startSearch);
+    $(document).on('click', '#viewPastResults', oo.viewPastResults);
     ipc.on('onAddOrEditProfile', oo.onAddOrEditProfile);
     ipc.on('onSuccessfulLogin', oo.onSuccessfulLogin);
     ipc.on('foundProfiles', oo.foundProfiles);

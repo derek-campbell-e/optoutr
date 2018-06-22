@@ -62,6 +62,37 @@ module.exports = function Profiles(OptOutr){
     });
   };
 
+  profiles.foundProfiles = function(person, foundProfiles, driver){
+    let personInProfiles = profiles.data[person.UUID];
+    let sites = {};
+    if(personInProfiles.sites){
+      sites = personInProfiles.sites;
+    }
+    sites[driver.name] = foundProfiles;
+    console.log(sites);
+    personInProfiles.sites = sites;
+    profiles.saveProfiles(function(){
+
+    });
+  };
+
+  profiles.removeMatchFromProfile = function(personID, site, matchID){
+    let person = profiles.data[personID];
+    if(!person){
+      return false;
+    }
+    let siteData = person.sites[site] || null;
+    if(!siteData){
+      return false;
+    }
+    siteData[matchID] = {};
+    delete siteData[matchID];
+    console.log(person, profiles.data);
+    profiles.saveProfiles(function(){
+
+    });
+  };
+
   profiles.refresh = function(){
     profiles.load();
     return profiles.export();

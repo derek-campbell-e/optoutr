@@ -19,7 +19,7 @@
         display: flex;
       }
 
-      #loginScreen {
+      #loginScreen{
         display: none;
       }
       .profiles {
@@ -37,14 +37,10 @@
         padding: 0;
       }
       .extend-col {
-        display: FLEX;
-        flex-direction: column;
-        justify-content: space-between;
+
       }
       .extend {
-        flex: 1;
-        height: 100%;
-        overflow: visible;
+
       }
       .flex-center {
         align-items: center;
@@ -60,7 +56,7 @@
         overflow-x: auto;
         flex-wrap: nowrap;
         display: flex;
-        padding-bottom: 21px;
+        padding-bottom: 21px!important;
       }
 
       .match {
@@ -78,45 +74,68 @@
         width: .1em;
         height: 4px;
         padding-left:21px;
-}
+      }
 
-::-webkit-scrollbar-thumb:window-inactive,
-::-webkit-scrollbar-thumb {
-        background:  black;
-}
+      ::-webkit-scrollbar-thumb:window-inactive,
+      ::-webkit-scrollbar-thumb {
+              background:  black;
+      }
 
-.nowrap {
-  flex-wrap: nowrap;
-}
+      .nowrap {
+        flex-wrap: nowrap;
+      }
 
-.progress {
-  border-radius: 200px;
-  line-height: 10px;
-}
-.progress-bar {
-  background-color: #5e85e3;
-  height: 10px;
-  line-height: 10px;
-}
-#searchRoutine, #profileEdit {
-  display: none;
-}
-.help-block {
-  font-size: 85%;
-  color: rgba(255,255,255, 0.5);
-}
-.profile {
-  cursor: pointer;
-}
-.verify {
-  text-align: right;
-}
+      .progress {
+        border-radius: 200px;
+        line-height: 10px;
+      }
+      .progress-bar {
+        background-color: #5e85e3;
+        height: 10px;
+        line-height: 10px;
+      }
+      #searchRoutine, #profileEdit {
+        display: none;
+      }
+      .help-block {
+        font-size: 85%;
+        color: rgba(255,255,255, 0.5);
+      }
+      .profile {
+        cursor: pointer;
+      }
+      .verify {
+        text-align: right;
+      }
+      .full-height-col {
+        align-items: stretch;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .full-height-col .extend {
+        height: 100%;
+        overflow: hidden;
+      }
+
+      .full-height-col .extend .wrapper {
+        overflow-y: auto;
+        height: 100%;
+        padding: 0 21px;
+      }
+      .full-container {
+        height: 100vh;
+      }
+
+      .vh {
+        height: 100vh;
+      }
     </style>
   </head>
   <body class='portfolio-body np'>
       <div id="portfolio-drawing"></div>
 
-    <div class='container-fluid' id='container'>
+    <div class='container-fluid full-container' id='container'>
 
       <div id="loginScreen">
         <div class='row'>
@@ -147,7 +166,7 @@
 
       
         <div id="profileScreen" class='row nowrap'>
-          <div class='profiles col-2 extend-col'>
+          <div class='profiles col-2 full-height-col'>
             <div class='row'>
               <div class='col'>
                   <h3 class='title'>PROFILES</h3>
@@ -157,7 +176,7 @@
             </div>
             
             <div class='row extend'>
-              <div class='profiles profiles-wrapper col'>
+              <div class='profiles  wrapper profiles-wrapper col'>
                 
               </div>
             </div>
@@ -165,7 +184,7 @@
           </div>
 
          
-            <div id='searchRoutine' class='col extend-col'>
+            <div id='searchRoutine' class='col full-height-col vh'>
 
               <div class='row'>
                 <div class='col title-col'>
@@ -174,61 +193,8 @@
               </div>
   
               <div class='row extend'>
-                <div class='col crawl-results'>
-  
-                  <div class='crawl-result row'>
-                    <div class='col wrapper'>
-  
-                      <div class='row'>
-                        <div class='col-10'>
-                          <h4>Spokeo<br><small>MATCHES FOUND:</small></h4>
-                        </div>
-                        <div class='col'>
-                          <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
-                          </div>
-                        </div>
-                      </div>
-  
-                      <div class='row matches'>
-                        <div class='col wrapper'>
-                            <div class='match col-5'>
-                              <h5>Derek E Campbell</h5><br>
-                              <p>Age: 26</p>
-                              <p>Relatives: Beth A Campbell, Donald E Campbell, Jeremy T Campbell</p>
-                            </div>
-  
-                            <div class='match col-5'>
-                                <h5>Derek E Campbell</h5><br>
-                                <p>Age: 26</p>
-                                <p>Relatives: Beth A Campbell, Donald E Campbell, Jeremy T Campbell</p>
-                              </div>
-  
-                              <div class='match col-5'>
-                                  <h5>Derek E Campbell</h5><br>
-                                  <p>Age: 26</p>
-                                  <p>Relatives: Beth A Campbell, Donald E Campbell, Jeremy T Campbell</p>
-                                </div>
-  
-                                <div class='match col-5'>
-                                    <h5>Derek E Campbell</h5><br>
-                                    <p>Age: 26</p>
-                                    <p>Relatives: Beth A Campbell, Donald E Campbell, Jeremy T Campbell</p>
-                                  </div>
-  
-                                  <div class='match col-5'>
-                                      <h5>Derek E Campbell</h5><br>
-                                      <p>Age: 26</p>
-                                      <p>Relatives: Beth A Campbell, Donald E Campbell, Jeremy T Campbell</p>
-                                    </div>
-                        </div>
-                        
-                      </div>
-  
-                    </div>
-                   
-                    
-                  </div>
+                <div class='col crawl-results wrapper'>
+
   
                 </div>
               </div>
@@ -241,14 +207,14 @@
             <div id='profileEdit' class='col extend-col'>
 
               <div class='row'>
-                <div class='col-12 col-lg-8 col-xl-4'>
+                <div class='col-12 col-lg-8 col-xl-4 full-height-col vh'>
                   <div class='row'>
                       <div class='col title-col'>
                         <h2>OPTOUTR<br><small>Edit Profile</small></h2>
                       </div>
                   </div>
-                  <div class='row'>
-                      <div class='col'>
+                  <div class='row extend'>
+                      <div class='col wrapper'>
                           <form>
                             <div class="form-group">
                               <label class="control-label" for="firstName">First Name</label> 
@@ -291,13 +257,24 @@
                       </div>
                   </div>
                   <div id='readyToGo' class='col extend-col'>
+
                       <div class='row extend  justify-content-center flex-center'>
                         <div class='col-4'>
                           <h2>Ready to go?<br><small>Click the button below to start!</small></h2>
                             <button id='startSearch' class="btn btn-block btn-primary">START SEARCH</button>
                         </div>
                       </div>
+
+
+                        <div  id='pastResults' style='display: none' class='row extend  justify-content-center flex-center'>
+                          <div class='col-4'>
+                            <h2>You've already ran a search...</h2>
+                              <button id='viewPastResults' class="btn btn-block btn-secondary">View Past Results</button>
+                          </div>
+                        </div>
+
                     </div>
+                  
               </div>
 
   
@@ -309,7 +286,7 @@
               
             </div>
 
-            <div id='profileSplash' class='col extend-col'>
+            <div id='profileSplash' class='col-10 extend-col'>
 
               <div class='row'>
                 <div class='col title-col'>

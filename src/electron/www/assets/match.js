@@ -1,4 +1,5 @@
-module.exports = function Match(CrawlItem, Profile){
+module.exports = function Match(CrawlItem, Profile, OptOutr){
+  const ipc = require('electron').ipcRenderer;
 
   let truncate = function(str, length, ending) {
     if (length == null) {
@@ -19,7 +20,7 @@ module.exports = function Match(CrawlItem, Profile){
 
   match.name = Profile.name || "";
   match.attr = {};
-
+  match.id = Profile.id;
   match.attr.relatives = [];
   match.attr.age = Profile.age || "";
   match.attr.locations = (Profile.locations || []).slice(0, 5);
@@ -60,10 +61,23 @@ module.exports = function Match(CrawlItem, Profile){
     CrawlItem.addMatch(match);
   };
 
+  match.clickedVerify = function(){
+    let target = $(this);
+    let isVerifedYes = target.is(".verifyYes");
+    if(isVerifedYes){
+      alert("YES");
+      console.log("VERIFY YES", Profile);
+    } else {
+      ipc.send('removeMatch', OptOutr.activeProfileUUID, CrawlItem.driver, Profile.id);
+      $(match.dom).remove();
+    }
+  };
+
   let bind = function(){
+    $(match.dom).on('click', '.verifyYes, .verifyNo', match.clickedVerify);
     $(match.dom).on('click', 'h5', function(){
-      //let text = $(this).text();
-      //alert(text);
+      let text = $(this).text();
+      alert(text);
     });
   };
 
@@ -80,6 +94,7 @@ module.exports = function Match(CrawlItem, Profile){
     match.dom = $(html);
     
     bind();
+    match.process();
     return match;
   };
 
