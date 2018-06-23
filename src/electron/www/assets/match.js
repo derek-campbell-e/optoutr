@@ -24,8 +24,10 @@ module.exports = function Match(CrawlItem, Profile, OptOutr){
   match.attr.relatives = [];
   match.attr.age = Profile.age || "";
   match.attr.locations = (Profile.locations || []).slice(0, 5);
+
   match.attr.address = "";
   match.attr.text = truncate(Profile.text, 50, '...');
+  match.attr.relatives = (Profile.relatives || []).slice(0, 5);
   match.attr.social = [];
 
   match.dom = null;
@@ -54,7 +56,7 @@ module.exports = function Match(CrawlItem, Profile, OptOutr){
     for(key in match.attr){
       let item = match.attr[key];
       if(!match.emptyAttr(item)){
-        attrHTML += `<p>${key}: ${match.processAttr(key, item)}</p>`;
+        attrHTML += `<p>${key}: <b>${match.processAttr(key, item)}</b></p>`;
       }
     }
     match.dom.find(".attr").html(attrHTML);

@@ -26,15 +26,32 @@ module.exports = function FastPeopleSearchDriver(NightmareModule){
   driver.selectors.alternate.eachProfileOnSearchPage = '.listview_section';
 
   driver.funcs = {};
-  driver.funcs.eachProfileSynopsisLocation = {};
-  driver.funcs.eachProfileSynopsisLocation.args = ['profileDom'];
-  driver.funcs.eachProfileSynopsisLocation.func = `
-    var locs = [];
-    profileDom.find(".different-line").each(function(i,e){
-      locs.push($(e).text());
-    });
+
+  NightmareModule.functionCreator(driver.funcs, 'eachProfileName', ['profileDom'], 'name',`
+    return profileDom.find(".card-title").text();
+  `);
+
+
+  NightmareModule.functionCreator(driver.funcs, 'eachProfileLocation', ['profileDom'], 'locations',`
+    let locs = [];
+    let current = profileDom.find(".card-text:first-child").text();
+    current = current.replace(/(Lives in:)/, '');
+    locs.push(current);
+    let usedTo = profileDom.find(".card-text:nth-child(3)").text();
+    usedTo = usedTo.replace(/(Used to live:)/, '');
+    usedTo = usedTo.split(/(.*?),{1}/);
+    //locs = locs.concat(usedTo);
     return locs;
-  `;
+  `);
+
+  NightmareModule.functionCreator(driver.funcs, 'eachProfileRelatives', ['profileDom'], 'relatives',`
+    let relatives = [];
+    profileDom.find("a").each(function(i,e){
+      let a = $(e);
+      relatives.push(a.text());
+    });
+    return relatives;
+  `);
   
 
   return driver;

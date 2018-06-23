@@ -63,6 +63,22 @@ module.exports = function NightmareRoutine(NightmareModule, Nightmare, Driver, C
       .wait(1000)
       .evaluate(function(selectors, funcs, person){
         funcs = funcs || {};
+
+        //helpers 
+        let chunk = function (myArray, chunk_size){
+          var index = 0;
+          var arrayLength = myArray.length;
+          var tempArray = [];
+          
+          for (index = 0; index < arrayLength; index += chunk_size) {
+              myChunk = myArray.slice(index, index+chunk_size);
+              // Do something if you want with the group
+              tempArray.push(myChunk);
+          }
+      
+          return tempArray;
+        };
+
         let replaceWhiteSpace = function(string){
           let copy = string;
           copy = copy.replace(/(\s{2,}|\n)/g, " ");
@@ -83,28 +99,24 @@ module.exports = function NightmareRoutine(NightmareModule, Nightmare, Driver, C
           let profile = {};
           profile.link = null;
 
-          if(selectors.eachProfileSynopsisLocation){
-            profile.location = dom.find(selectors.eachProfileSynopsisLocation).text();
-            profile.location = replaceWhiteSpace(profile.location);
-          }
-
-          if(selectors.eachProfileSynopsisAge){
-            profile.age = dom.find(selectors.eachProfileSynopsisAge).text();
-            profile.age = replaceWhiteSpace(profile.age);
-          }
-      
           let text = "";
           dom.children().each(function(i, e){
             text += $(e).text();
             text += "\n";
           });
+
           profile.text = replaceWhiteSpace(text);
-          
           
           if(selectors.eachProfileOnSearchPage === selectors.eachProfileLink){
             profile.link = dom.attr('href');
           } else {
             profile.link = dom.find(selectors.eachProfileLink).attr('href');
+          }
+
+          if(funcs.api){
+            let func = createCustomFunction(funcs.api.args, funcs.api.func);
+            let result = func(dom);
+            profile.api = result;
           }
 
           for(let funcKey in funcs){
@@ -117,33 +129,12 @@ module.exports = function NightmareRoutine(NightmareModule, Nightmare, Driver, C
             profile[funcObject.affects] = result;
           }
 
-          if(funcs.api){
-            let func = createCustomFunction(funcs.api.args, funcs.api.func);
-            let result = func(dom);
-            profile.api = result;
-          }
-          
           if(profile.link){
             profile.link = new URL(profile.link, window.location.href).href;
           }
           
-          var willContinue = false;
-          if(typeof person.locations === "undefined"){
-            person.locations = [];
-          }
-          for(_location of person.locations){
-            if(profile.text.indexOf(_location) !== -1){
-              willContinue = true;
-            }
-            if(profile.text.indexOf(_location.split(",")[0]) !== -1){
-              willContinue = true;
-            }
-            for(_loc of profile.location){
-              if(stringSimilarity.compareTwoStrings(_location, _loc) > 0.5){
-                willContinue = true;
-              }
-            }
-          }
+          var willContinue = true;
+
           if(!willContinue){
             return null;
           }

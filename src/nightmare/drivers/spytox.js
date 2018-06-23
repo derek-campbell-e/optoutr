@@ -29,6 +29,20 @@ module.exports = function SpyToxDriver(NightmareModule){
 
   driver.selectors.alternate = {};
   driver.selectors.alternate.eachProfileOnSearchPage = '.listview_section';
+
+  driver.funcs = {};
+
+  NightmareModule.functionCreator(driver.funcs, 'eachProfileName', ['profileDom'], 'name',`
+    return profileDom.find(".first-person a").text();
+  `);
+
+  NightmareModule.functionCreator(driver.funcs, 'eachProfileLocations', ['profileDom'], 'locations',`
+    let locs = [];
+    profileDom.find(".addresses p").each(function(i,e){
+      locs.push($(e).text());
+    });
+    return locs;
+  `);
   
 
   return driver;
